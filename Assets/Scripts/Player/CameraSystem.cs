@@ -1,0 +1,118 @@
+using JetBrains.Annotations;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// カメラをTPSからFPSへ切り替える
+/// </summary>
+public class CameraSystem : MonoBehaviour
+{
+    public GameObject tpsCamera;
+    public GameObject fpsCamera;
+    public GameObject cameraUI;
+    public GameObject congratuText;
+    public GameObject shippaiText;
+    public EncyclopediaManager encyclopediaManager;
+    public AudioSource audioSource;
+    public AudioClip shutterSE;
+    private bool fpsCameraOn;
+    
+    public PhotoScoreSystem photoScoreSystem;
+
+    void Start()
+    {
+        //テスト
+        //Debug.Log("CameraSystem Start");
+        //Debug.Log(gameObject.GetInstanceID());
+        //Debug.Log(fpsCamera.activeSelf);
+
+        tpsCamera.SetActive(true);
+        fpsCamera.SetActive(false);
+        cameraUI.SetActive(false);
+        congratuText.SetActive(false);
+        shippaiText.SetActive(false);
+        fpsCameraOn = false;
+
+        //audioSource = GetComponent<AudioSource>();
+    }
+
+    void Update()
+    {
+
+        Debug.DrawRay(fpsCamera.transform.position, fpsCamera.transform.forward * 100f, Color.green, 2f);
+       // Debug.Log(fpsCamera.transform.forward);
+
+
+        // 右クリックで撮影モード
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (!fpsCameraOn)
+            {
+                // 向きだけTPSからコピー
+                fpsCamera.transform.rotation = tpsCamera.transform.rotation;
+
+                tpsCamera.SetActive(false);
+                fpsCamera.SetActive(true);
+                cameraUI.SetActive(true);
+                congratuText.SetActive(false);
+                shippaiText.SetActive(false);
+                fpsCameraOn = true;
+            }
+            else //fpsCameraOnがTrueのときに右クリックでOFFにする
+            {
+                tpsCamera.SetActive(true);
+                fpsCamera.SetActive(false);
+                cameraUI.SetActive(false);
+                fpsCameraOn = false;
+
+            }
+
+        };
+
+        //
+        if (Input.GetMouseButtonDown(0) && fpsCameraOn)
+        {
+            Ray ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
+            RaycastHit hit;
+
+            // SEを鳴らす
+            //Debug.Log(audioSource);
+            audioSource.PlayOneShot(shutterSE);
+
+            if (Physics.Raycast(ray, out hit, 100f))
+            {
+
+                //Creatureクラスの参照を取得する
+                Creature creature = hit.collider.GetComponentInParent<Creature>();
+
+                if (creature != null)
+                {
+                    //のちにイベントを発行して処理を細分化する
+                    CreatureData data = creature.data;
+
+                    encyclopediaManager.Register(data);
+
+                    //スコア計算をする
+                    int score = photoScoreSystem.CalculateScore(creature);
+
+                    //Debug.Log(score);
+
+                    congratuText.SetActive(true);
+                    Debug.Log("撮影：" + creature.data.creatureName);
+
+                }
+
+            }
+            else
+            {
+                shippaiText.SetActive(true);
+                Debug.Log("撮影失敗");
+            }
+        }
+    }
+
+
+
+
+}
