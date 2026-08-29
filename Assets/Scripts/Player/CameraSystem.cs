@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -11,8 +12,7 @@ public class CameraSystem : MonoBehaviour
     public GameObject tpsCamera;
     public GameObject fpsCamera;
     public GameObject cameraUI;
-    public GameObject congratuText;
-    public GameObject shippaiText;
+    public TMP_Text photoresultText;
     public EncyclopediaManager encyclopediaManager;
     public AudioSource audioSource;
     public AudioClip shutterSE;
@@ -30,8 +30,7 @@ public class CameraSystem : MonoBehaviour
         tpsCamera.SetActive(true);
         fpsCamera.SetActive(false);
         cameraUI.SetActive(false);
-        congratuText.SetActive(false);
-        shippaiText.SetActive(false);
+        photoresultText.gameObject.SetActive(false);
         fpsCameraOn = false;
 
         //audioSource = GetComponent<AudioSource>();
@@ -55,8 +54,7 @@ public class CameraSystem : MonoBehaviour
                 tpsCamera.SetActive(false);
                 fpsCamera.SetActive(true);
                 cameraUI.SetActive(true);
-                congratuText.SetActive(false);
-                shippaiText.SetActive(false);
+                photoresultText.gameObject.SetActive(false);
                 fpsCameraOn = true;
             }
             else //fpsCameraOnÇ™TrueÇÃÇ∆Ç´Ç…âEÉNÉäÉbÉNÇ≈OFFÇ…Ç∑ÇÈ
@@ -98,17 +96,30 @@ public class CameraSystem : MonoBehaviour
 
                     //Debug.Log(score);
 
-                    congratuText.SetActive(true);
-                    Debug.Log("éBâeÅF" + creature.data.creatureName);
+                    photoresultText.text = "éBâeê¨å˜ÅIÅI";
+                    photoresultText.gameObject.SetActive(true);
+                    //3ïbå„Ç…îÒï\é¶Ç…Ç∑ÇÈ
+                    StartCoroutine(HideMessageAfterSeconds(3f));
+                    //Debug.Log("éBâeÅF" + creature.data.creatureName);
 
                 }
 
             }
             else
             {
-                shippaiText.SetActive(true);
-                Debug.Log("éBâeé∏îs");
+                photoresultText.text = "éBâeé∏îsÅIÅI";
+                photoresultText.gameObject.SetActive(true);
+                //3ïbå„Ç…îÒï\é¶Ç…Ç∑ÇÈ
+                StartCoroutine(HideMessageAfterSeconds(3f));
+                //Debug.Log("éBâeé∏îs");
             }
+        }
+
+        IEnumerator HideMessageAfterSeconds(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+
+            photoresultText.gameObject.SetActive(false);
         }
     }
 
