@@ -9,8 +9,8 @@ using UnityEngine;
 /// </summary>
 public class CameraSystem : MonoBehaviour
 {
-    public GameObject tpsCamera;
-    public GameObject fpsCamera;
+    public TPSCamera tpsCamera;
+    public FPSCamera fpsCamera;
     public GameObject cameraUI;
     public TMP_Text photoresultText;
     public EncyclopediaManager encyclopediaManager;
@@ -23,15 +23,17 @@ public class CameraSystem : MonoBehaviour
     void Start()
     {
         //テスト
-        //Debug.Log("CameraSystem Start");
+        Debug.Log("CameraSystem Start");
         //Debug.Log(gameObject.GetInstanceID());
         //Debug.Log(fpsCamera.activeSelf);
 
-        tpsCamera.SetActive(true);
-        fpsCamera.SetActive(false);
+        tpsCamera.gameObject.SetActive(true);
+        fpsCamera.gameObject.SetActive(false);
         cameraUI.SetActive(false);
         photoresultText.gameObject.SetActive(false);
         fpsCameraOn = false;
+        Debug.Log("TPS"+tpsCamera.gameObject.activeSelf);
+        Debug.Log("FPS"+fpsCamera.gameObject.activeSelf);
 
         //audioSource = GetComponent<AudioSource>();
     }
@@ -39,7 +41,7 @@ public class CameraSystem : MonoBehaviour
     void Update()
     {
 
-        Debug.DrawRay(fpsCamera.transform.position, fpsCamera.transform.forward * 100f, Color.green, 2f);
+        //Debug.DrawRay(fpsCamera.transform.position, fpsCamera.transform.forward * 100f, Color.green, 2f);
        // Debug.Log(fpsCamera.transform.forward);
 
 
@@ -49,18 +51,21 @@ public class CameraSystem : MonoBehaviour
             if (!fpsCameraOn)
             {
                 // 向きだけTPSからコピー
-                fpsCamera.transform.rotation = tpsCamera.transform.rotation;
+                //fpsCamera.transform.rotation = tpsCamera.transform.rotation;
 
-                tpsCamera.SetActive(false);
-                fpsCamera.SetActive(true);
+                //tpsカメラの向きをfpsカメラにコピーする
+                fpsCamera.SetRotation(tpsCamera.transform.rotation);
+
+                tpsCamera.gameObject.SetActive(false);
+                fpsCamera.gameObject.SetActive(true);
                 cameraUI.SetActive(true);
                 photoresultText.gameObject.SetActive(false);
                 fpsCameraOn = true;
             }
             else //fpsCameraOnがTrueのときに右クリックでOFFにする
             {
-                tpsCamera.SetActive(true);
-                fpsCamera.SetActive(false);
+                tpsCamera.gameObject.SetActive(true);
+                fpsCamera.gameObject.SetActive(false);
                 cameraUI.SetActive(false);
                 fpsCameraOn = false;
 
@@ -71,6 +76,8 @@ public class CameraSystem : MonoBehaviour
         //
         if (Input.GetMouseButtonDown(0) && fpsCameraOn)
         {
+            Debug.Log("撮影処理に入りました");
+
             Ray ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
             RaycastHit hit;
 

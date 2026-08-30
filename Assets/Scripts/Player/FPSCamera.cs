@@ -16,7 +16,7 @@ public class FPSCamera : MonoBehaviour
     void Update()
     {
         //ƒeƒXƒg
-        Debug.Log("FPSCamera Update");
+        //Debug.Log("FPSCamera Update");
 
         if (!gameObject.activeSelf)
             return;
@@ -38,5 +38,32 @@ public class FPSCamera : MonoBehaviour
 
         transform.localRotation =
             Quaternion.Euler(xRotation, yRotation, 0f);
+    }
+
+    public void SetRotation(Quaternion worldRotation)
+    {
+        Quaternion localRotation = Quaternion.Inverse(transform.parent.rotation) * worldRotation;
+
+        //Šp“x‚ðEulerŠp‚É•ÏŠ·
+        Vector3 euler = localRotation.eulerAngles;
+
+        xRotation = euler.x;
+        yRotation = euler.y;
+
+        //FPScamera‚Ì•Ï”‚É‘ã“ü‚·‚é
+        // -180`180‚É•ÏŠ·
+        if (xRotation > 180f)
+            xRotation -= 360f;
+
+        if (yRotation > 180f)
+            yRotation -= 360f;
+
+        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
+
+        transform.localRotation = Quaternion.Euler(
+            xRotation,
+            yRotation,
+            0f
+        );
     }
 }
