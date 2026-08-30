@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.Rendering.DebugUI;
 
 /// <summary>
@@ -27,8 +28,24 @@ public class MenuManager : MonoBehaviour
     /// <param name="panel"></param>
     public void ClosePanel(GameObject panel)
     {
-        Debug.Log("閉じるが押された");
         panel.SetActive(false);
         menuPanel.SetActive(true);
+    }
+
+    /// <summary>
+    /// メニュー画面を閉じる
+    /// </summary>
+    /// <param name="panel"></param>
+    public void CloseMenuPanel(GameObject panel)
+    {
+        panel.SetActive(false);
+    }
+
+    /// <summary>
+    /// タイトルへ戻る
+    /// </summary>
+    public void ReturnToTitle()
+    {
+        SceneManager.LoadScene("Title");
     }
 }
