@@ -6,9 +6,11 @@ public class PlayerMove : MonoBehaviour
 {
     public float speed = 5f;
     public float rotateSpeed = 120f;
+    public CameraSystem cameraSystem;
 
     void Update()
     {
+        if (cameraSystem.IsFPSMode())return;
 
         //float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");

@@ -121,16 +121,20 @@ public class CameraSystem : MonoBehaviour
                 //Debug.Log("éBâeé∏îs");
             }
         }
-
-        IEnumerator HideMessageAfterSeconds(float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
-
-            photoresultText.gameObject.SetActive(false);
-        }
     }
 
+    IEnumerator HideMessageAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
 
-
-
+        photoresultText.gameObject.SetActive(false);
+    }
+    /// <summary>
+    /// ÉJÉÅÉâÉÇÅ[ÉhÇÃON/OFFÇï‘Ç∑
+    /// </summary>
+    /// <returns></returns>
+    public bool IsFPSMode()
+    {
+        return fpsCameraOn;
+    }
 }

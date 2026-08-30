@@ -7958,6 +7958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   rotateSpeed: 120
+  cameraSystem: {fileID: 1759294452}
 --- !u!114 &1759294452
 MonoBehaviour:
   m_ObjectHideFlags: 0
