@@ -6,6 +6,7 @@ using UnityEngine;
 
 /// <summary>
 /// カメラをTPSからFPSへ切り替える
+/// 管理対象：FPSCamera、TPSCamera
 /// </summary>
 public class CameraSystem : MonoBehaviour
 {
@@ -22,36 +23,21 @@ public class CameraSystem : MonoBehaviour
 
     void Start()
     {
-        //テスト
-        Debug.Log("CameraSystem Start");
-        //Debug.Log(gameObject.GetInstanceID());
-        //Debug.Log(fpsCamera.activeSelf);
-
+        //スタート時はTPSをON、FPSをOFF
         tpsCamera.gameObject.SetActive(true);
         fpsCamera.gameObject.SetActive(false);
         cameraUI.SetActive(false);
         photoresultText.gameObject.SetActive(false);
         fpsCameraOn = false;
-        Debug.Log("TPS"+tpsCamera.gameObject.activeSelf);
-        Debug.Log("FPS"+fpsCamera.gameObject.activeSelf);
-
-        //audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-
-        //Debug.DrawRay(fpsCamera.transform.position, fpsCamera.transform.forward * 100f, Color.green, 2f);
-       // Debug.Log(fpsCamera.transform.forward);
-
-
         // 右クリックで撮影モード
         if (Input.GetMouseButtonDown(1))
         {
             if (!fpsCameraOn)
             {
-                // 向きだけTPSからコピー
-                //fpsCamera.transform.rotation = tpsCamera.transform.rotation;
 
                 //tpsカメラの向きをfpsカメラにコピーする
                 fpsCamera.SetRotation(tpsCamera.transform.rotation);
@@ -76,13 +62,10 @@ public class CameraSystem : MonoBehaviour
         //
         if (Input.GetMouseButtonDown(0) && fpsCameraOn)
         {
-            Debug.Log("撮影処理に入りました");
-
             Ray ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
             RaycastHit hit;
 
             // SEを鳴らす
-            //Debug.Log(audioSource);
             audioSource.PlayOneShot(shutterSE);
 
             if (Physics.Raycast(ray, out hit, 100f))
@@ -100,8 +83,6 @@ public class CameraSystem : MonoBehaviour
 
                     //スコア計算をする
                     int score = photoScoreSystem.CalculateScore(creature);
-
-                    //Debug.Log(score);
 
                     photoresultText.text = "撮影成功！！";
                     photoresultText.gameObject.SetActive(true);
@@ -123,12 +104,18 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 撮影UIの文字を一定時間(引数)表示し、非表示にする
+    /// </summary>
+    /// <param name="seconds"></param>
+    /// <returns></returns>
     IEnumerator HideMessageAfterSeconds(float seconds)
     {
         yield return new WaitForSeconds(seconds);
 
         photoresultText.gameObject.SetActive(false);
     }
+
     /// <summary>
     /// カメラモードのON/OFFを返す
     /// </summary>
