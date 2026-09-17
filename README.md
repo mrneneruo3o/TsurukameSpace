@@ -30,4 +30,4 @@
 
 ## 動画
 
-後日追加予定
+[プレイ動画](https://youtu.be/kB8uRavC3dI)
