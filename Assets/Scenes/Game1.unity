@@ -1745,7 +1745,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1580446762}
-  mouseSensitivity: 200
   distance: 6
 --- !u!81 &330585549
 AudioListener:
@@ -3862,17 +3861,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7ccc173be8b5bc34ea183e86179fff2b,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 500
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7ccc173be8b5bc34ea183e86179fff2b,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 500
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7ccc173be8b5bc34ea183e86179fff2b,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 500
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7ccc173be8b5bc34ea183e86179fff2b,
         type: 3}
@@ -10673,18 +10672,33 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 75486ff24fc069a4cbb575405dc52eb8,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 75486ff24fc069a4cbb575405dc52eb8,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 75486ff24fc069a4cbb575405dc52eb8,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 75486ff24fc069a4cbb575405dc52eb8,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 75486ff24fc069a4cbb575405dc52eb8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.67
+      value: 14.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 75486ff24fc069a4cbb575405dc52eb8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.11
+      value: 7.72
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 75486ff24fc069a4cbb575405dc52eb8,
         type: 3}
