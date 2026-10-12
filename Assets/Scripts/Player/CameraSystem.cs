@@ -19,7 +19,9 @@ public class CameraSystem : MonoBehaviour
     public AudioClip shutterSE;
     private bool fpsCameraOn;
     
+    //クラス
     public PhotoScoreSystem photoScoreSystem;
+    public SaveManager saveManager;
 
     void Start()
     {
@@ -89,6 +91,10 @@ public class CameraSystem : MonoBehaviour
                     //3秒後に非表示にする
                     StartCoroutine(HideMessageAfterSeconds(3f));
                     //Debug.Log("撮影：" + creature.data.creatureName);
+
+                    //セーブデータに保存
+                    saveManager.MarkPhotographed("test_Creature_001");
+                    saveManager.MarkGoalCompleted("test_Goal_001");
 
                 }
 

@@ -12,8 +12,14 @@ public class SaveManager : MonoBehaviour
     //セーブデータ格納
     public SaveData Data { get; private set; }
 
-    //セーブデータ保存先　これでいいのか？
+    //セーブデータ保存先
     string SavePath => Path.Combine(Application.persistentDataPath, "save.json");
+
+    //テスト用
+    private void Awake()
+    {
+        Load();
+    }
 
     /// <summary>
     /// セーブデータをロード=Dataにjsonファイルを格納していつでも使えるようにする
@@ -65,6 +71,7 @@ public class SaveManager : MonoBehaviour
 
     public void MarkPhotographed(string speciesId)
     {
+        Debug.Log("生物ID保存");
         //セーブデータに生物IDが存在しないとき
         if (!Data.photographedSpeciesIds.Contains(speciesId))
         {
@@ -77,6 +84,8 @@ public class SaveManager : MonoBehaviour
 
     public void MarkGoalCompleted(string goalId)
     {
+        Debug.Log("目標ID保存");
+
         //セーブデータに生物IDが存在しないとき
         if (!Data.completedGoalIds.Contains(goalId))
         {
@@ -93,6 +102,7 @@ public class SaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(Data, true);
         //textファイルに出力する
         File.WriteAllText(SavePath, json);
+        Debug.Log("保存先"+ SavePath);
     }
 }
 
